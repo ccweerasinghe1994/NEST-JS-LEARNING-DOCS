@@ -41,3 +41,15 @@ GET http://localhost:3000/bye HTTP/1.1
 summery 
 
 ![Alt text](image-3.png)
+
+![Alt text](<11 - Project-Structure-2x.png>)
+
+
+![Alt text](<13 - Controllers-2x.png>)
+
+![Alt text](<14 - Resource-Controller-2x.png>)
+
+
+let's create a controller
+
+<video src="14%20-%20Resource%20Controller.mp4" controls title="Title"></video>
