@@ -1,5 +1,15 @@
 # COMPLETE NEST JS COURSE
 
+## Table of Contents
+
+- [COMPLETE NEST JS COURSE](#complete-nest-js-course)
+  - [Table of Contents](#table-of-contents)
+  - [Controllers Routing Requests](#controllers-routing-requests)
+  - [let's install nest js cli](#lets-install-nest-js-cli)
+  - [let's create a new project](#lets-create-a-new-project)
+
+## Controllers Routing Requests
+
 ## let's install nest js cli
 
 ```bash
@@ -52,4 +62,3 @@ summery
 
 let's create a controller
 
-<video src="14%20-%20Resource%20Controller.mp4" controls title="Title"></video>
