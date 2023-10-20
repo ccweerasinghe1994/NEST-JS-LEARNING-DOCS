@@ -14,7 +14,7 @@
     - [17 - Responses and Status Codes ✅](#17---responses-and-status-codes-)
     - [18 - Request Payload Data Transfer Objects ✅](#18---request-payload-data-transfer-objects-)
     - [19 - The Update Payload ✅](#19---the-update-payload-)
-    - [20 - A Working API Example🔲](#20---a-working-api-example)
+    - [20 - A Working API Example ✅](#20---a-working-api-example-)
     - [🔲](#)
     - [🔲](#-1)
     - [🔲](#-2)
@@ -443,7 +443,131 @@ export class EventController {
 
 ![Alt text](image-16.png)
 
-### 20 - A Working API Example🔲
+### 20 - A Working API Example ✅
+
+let's create a Entity class
+
+```ts
+export class Event {
+  id: number;
+  name: string;
+  when: Date;
+  address: string;
+  description: string;
+}
+
+```
+
+and use it in the event.controller.ts
+
+```ts
+import {
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Delete,
+  Param,
+  Body,
+  HttpCode,
+} from '@nestjs/common';
+import { CreateEventDto } from './create-event.dto';
+import { UpdateEventDto } from './update-event.dto';
+import { Event } from './event.entity';
+
+@Controller('/event')
+export class EventController {
+  private events: Event[] = [
+    {
+      id: 1,
+      name: 'First event',
+      when: new Date('2021-01-01T00:00:00.000Z'),
+      address: 'Rua A',
+      description: 'Event description',
+    },
+    {
+      id: 2,
+      name: 'Second event',
+      when: new Date('2021-01-01T00:00:00.000Z'),
+      address: 'Rua B',
+      description: 'Event description',
+    },
+  ];
+  @Get()
+  findAll() {
+    return this.events;
+  }
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.events.find((event) => event.id === Number(id));
+  }
+  @Post()
+  create(@Body() body: CreateEventDto) {
+    const event: Event = {
+      ...body,
+      id: this.events.length + 1,
+      when: new Date(body.when),
+    };
+    this.events.push(event);
+    return event;
+  }
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() body: UpdateEventDto) {
+    const index = this.events.findIndex((event) => event.id === Number(id));
+    this.events[index] = {
+      ...this.events[index],
+      ...body,
+      when: body.when ? new Date(body.when) : this.events[index].when,
+    };
+    return this.events[index];
+  }
+  @Delete(':id')
+  @HttpCode(204)
+  delete(@Param('id') id: string) {
+    this.events = this.events.filter((event) => event.id !== Number(id));
+  }
+}
+```
+
+let's test the api
+
+```http
+### GET ALL EVENT
+GET http://localhost:3000/event HTTP/1.1
+content-type: application/json
+
+### GET EVENT BY ID
+GET http://localhost:3000/event/1
+
+
+### CREATE EVENT
+POST http://localhost:3000/event HTTP/1.1
+content-type: application/json
+
+{
+  "name": "david",
+  "when": "2021-01-01T00:00:00.000Z",
+  "address": "address",
+  "description": "test description"
+}
+
+### DELETE EVENT
+
+DELETE http://localhost:3000/event/3 HTTP/1.1
+
+### UPDATE EVENT
+PATCH http://localhost:3000/event/1 HTTP/1.1
+content-type: application/json
+
+{
+  "name": "david update",
+  "when": "2021-01-01T00:00:00.000Z",
+  "address": "address",
+  "description": "test description"
+}
+
+```
+
 ![Alt text](<20 - Array.find-2x.png>)
 
 spread operator https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
