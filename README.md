@@ -13,7 +13,7 @@
     - [16 - Request Body ✅](#16---request-body-)
     - [17 - Responses and Status Codes ✅](#17---responses-and-status-codes-)
     - [18 - Request Payload Data Transfer Objects ✅](#18---request-payload-data-transfer-objects-)
-    - [19 - The Update Payload🔲](#19---the-update-payload)
+    - [19 - The Update Payload ✅](#19---the-update-payload-)
     - [20 - A Working API Example🔲](#20---a-working-api-example)
     - [🔲](#)
     - [🔲](#-1)
@@ -365,7 +365,84 @@ now we have access to the dto in the controller
 
 **Summery**
 ![Alt text](image-15.png)
-### 19 - The Update Payload🔲
+### 19 - The Update Payload ✅
+
+let's install @nestjs/mapped-types
+
+```bash
+npm i @nestjs/mapped-types
+```
+and create the update-event.dto.ts
+
+```ts
+import { PartialType } from '@nestjs/mapped-types';
+import { CreateEventDto } from './create-event.dto';
+
+export class UpdateEventDto extends PartialType(CreateEventDto) {}
+```
+
+and use it in the event.controller.ts
+
+```ts
+import {
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Delete,
+  Param,
+  Body,
+  HttpCode,
+} from '@nestjs/common';
+import { CreateEventDto } from './create-event.dto';
+import { UpdateEventDto } from './update-event.dto';
+
+@Controller('/event')
+export class EventController {
+  @Get()
+  findAll() {
+    return [
+      {
+        id: 1,
+        name: 'First event',
+      },
+      {
+        id: 2,
+        name: 'Second event',
+      },
+    ];
+  }
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return id;
+  }
+  @Post()
+  create(@Body() body: CreateEventDto) {
+    console.log(body.description);
+    console.log(body.name);
+    console.log(body.address);
+    console.log(body.when);
+    return body;
+  }
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() body: UpdateEventDto) {
+    console.log(body.description);
+    console.log(body.name);
+    console.log(body.address);
+    console.log(body.when);
+    return id;
+  }
+  @Delete(':id')
+  @HttpCode(204)
+  delete(@Param('id') id: string) {
+    return id;
+  }
+}
+
+```
+
+![Alt text](image-16.png)
+
 ### 20 - A Working API Example🔲
 ![Alt text](<20 - Array.find-2x.png>)
 
