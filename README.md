@@ -10,7 +10,7 @@
     - [13 - Controllers](#13---controllers)
     - [14 - Resource Controller ✅](#14---resource-controller-)
     - [15 - Route Parameters ✅](#15---route-parameters-)
-    - [16 - Request Body🔲](#16---request-body)
+    - [16 - Request Body ✅](#16---request-body-)
     - [17 - Responses and Status Codes🔲](#17---responses-and-status-codes)
     - [18 - Request Payload Data Transfer Objects🔲](#18---request-payload-data-transfer-objects)
     - [19 - The Update Payload🔲](#19---the-update-payload)
@@ -219,7 +219,42 @@ export class EventController {
 **SUMMERY**
 
 ![Alt text](image-11.png)
-### 16 - Request Body🔲
+### 16 - Request Body ✅
+
+let's add a body to the post request
+
+![Alt text](image-12.png)
+
+
+```ts
+  @Post()
+  create(@Body() body: any) {
+    return body;
+  }
+```
+
+let's test the api
+
+```http
+### CREATE EVENT
+POST http://localhost:3000/event HTTP/1.1
+content-type: application/json
+
+{
+  "name": "sample",
+  "time": "Wed, 21 Oct 2015 18:27:50 GMT"
+}
+
+```
+
+output
+```json
+{
+  "name": "sample",
+  "time": "Wed, 21 Oct 2015 18:27:50 GMT"
+}
+```
+
 ### 17 - Responses and Status Codes🔲
 ![Alt text](<17 - Responses-2x.png>)
 
