@@ -12,7 +12,7 @@
     - [15 - Route Parameters ✅](#15---route-parameters-)
     - [16 - Request Body ✅](#16---request-body-)
     - [17 - Responses and Status Codes ✅](#17---responses-and-status-codes-)
-    - [18 - Request Payload Data Transfer Objects🔲](#18---request-payload-data-transfer-objects)
+    - [18 - Request Payload Data Transfer Objects ✅](#18---request-payload-data-transfer-objects-)
     - [19 - The Update Payload🔲](#19---the-update-payload)
     - [20 - A Working API Example🔲](#20---a-working-api-example)
     - [🔲](#)
@@ -336,7 +336,35 @@ most used status codes
 
 ![Alt text](<17 - Status-Codes-2x.png>)
 
-### 18 - Request Payload Data Transfer Objects🔲
+### 18 - Request Payload Data Transfer Objects ✅
+
+let's create  a dto
+
+```bash
+export class CreateEventDto {
+  name: string;
+  when: string;
+  address: string;
+  description: string;
+}
+```
+
+now we have access to the dto in the controller
+
+```ts
+  @Post()
+  create(@Body() body: CreateEventDto) {
+    console.log(body.description);
+    console.log(body.name);
+    console.log(body.address);
+    console.log(body.when);
+    return body;
+  }
+```
+
+
+**Summery**
+![Alt text](image-15.png)
 ### 19 - The Update Payload🔲
 ### 20 - A Working API Example🔲
 ![Alt text](<20 - Array.find-2x.png>)
