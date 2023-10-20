@@ -11,7 +11,7 @@
     - [14 - Resource Controller ✅](#14---resource-controller-)
     - [15 - Route Parameters ✅](#15---route-parameters-)
     - [16 - Request Body ✅](#16---request-body-)
-    - [17 - Responses and Status Codes🔲](#17---responses-and-status-codes)
+    - [17 - Responses and Status Codes ✅](#17---responses-and-status-codes-)
     - [18 - Request Payload Data Transfer Objects🔲](#18---request-payload-data-transfer-objects)
     - [19 - The Update Payload🔲](#19---the-update-payload)
     - [20 - A Working API Example🔲](#20---a-working-api-example)
@@ -255,9 +255,84 @@ output
 }
 ```
 
-### 17 - Responses and Status Codes🔲
+### 17 - Responses and Status Codes ✅
 ![Alt text](<17 - Responses-2x.png>)
 
+code change
+
+![Alt text](image-13.png)
+
+code
+
+```ts
+import {
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Delete,
+  Param,
+  Body,
+  HttpCode,
+} from '@nestjs/common';
+
+@Controller('/event')
+export class EventController {
+  @Get()
+  findAll() {
+    return [
+      {
+        id: 1,
+        name: 'First event',
+      },
+      {
+        id: 2,
+        name: 'Second event',
+      },
+    ];
+  }
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return id;
+  }
+  @Post()
+  create(@Body() body: any) {
+    return body;
+  }
+  @Patch(':id')
+  update(@Param('id') id: string) {
+    return id;
+  }
+  @Delete(':id')
+  @HttpCode(204)
+  delete(@Param('id') id: string) {
+    return id;
+  }
+}
+
+```
+
+let's test the api
+
+```http
+### DELETE EVENT
+
+DELETE http://localhost:3000/event/1 HTTP/1.1
+```
+
+![Alt text](image-14.png)
+
+we can add status code to the response
+
+```ts
+  @Delete(':id')
+  @HttpCode(204)
+  delete(@Param('id') id: string) {
+    return id;
+  }
+```
+
+most used status codes
 
 ![Alt text](<17 - Status-Codes-2x.png>)
 
